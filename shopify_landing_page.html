@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odoo Connector for Shopify</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #714B67 0%, #5A4570 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            font-size: 1.4em;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+        
+        .install-button {
+            display: inline-block;
+            background: #00C851;
+            color: white;
+            padding: 18px 50px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1.3em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 200, 81, 0.3);
+        }
+        
+        .install-button:hover {
+            background: #00A843;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 200, 81, 0.4);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .benefits {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+        
+        .benefits h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 60px;
+            color: #2d3748;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .benefit-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h3 {
+            color: #714B67;
+            margin-bottom: 15px;
+            font-size: 1.6em;
+        }
+        
+        .benefit-card p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+        
+        .features {
+            padding: 80px 20px;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 60px;
+            color: #2d3748;
+        }
+        
+        .feature-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 35px;
+            padding: 25px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .feature-check {
+            color: #00C851;
+            font-size: 2em;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .feature-item h4 {
+            font-size: 1.3em;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+        
+        .feature-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .how-it-works {
+            background: linear-gradient(135deg, #714B67 0%, #5A4570 100%);
+            color: white;
+            padding: 80px 20px;
+        }
+        
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 60px;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            text-align: center;
+        }
+        
+        .step-number {
+            background: rgba(255,255,255,0.2);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+        
+        .step h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        
+        .step p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .cta-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+        
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            color: #666;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #90cdf4;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer-links {
+            margin-top: 20px;
+        }
+        
+        .footer-links a {
+            margin: 0 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔗 Odoo Connector for Shopify</h1>
+        <p class="subtitle">Seamlessly sync your Shopify store with Odoo ERP. Manage products, orders, inventory, and customers from one platform.</p>
+        <a href="install.html" class="install-button">Install App Now</a>
+    </div>
+    
+    <div class="benefits">
+        <div class="container">
+            <h2>Why Choose Our Connector?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Real-Time Sync</h3>
+                    <p>Automatic synchronization ensures your Shopify and Odoo data is always up-to-date without manual intervention.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Save Time & Money</h3>
+                    <p>Eliminate duplicate data entry and reduce errors. Focus on growing your business, not managing data.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">📊</div>
+                    <h3>Complete Visibility</h3>
+                    <p>Get a unified view of your e-commerce and business operations across both platforms.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="features">
+        <div class="container">
+            <h2>Powerful Features</h2>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-check">✓</div>
+                    <div>
+                        <h4>Product & Inventory Sync</h4>
+                        <p>Sync products, variants, prices, and stock levels bidirectionally between Shopify and Odoo.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-check">✓</div>
+                    <div>
+                        <h4>Order Management</h4>
+                        <p>Import Shopify orders into Odoo automatically for streamlined fulfillment and accounting.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-check">✓</div>
+                    <div>
+                        <h4>Customer Data Integration</h4>
+                        <p>Keep customer information synchronized for consistent communication and CRM management.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-check">✓</div>
+                    <div>
+                        <h4>Automated Workflows</h4>
+                        <p>Set up automated rules for order processing, inventory updates, and fulfillment status.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-check">✓</div>
+                    <div>
+                        <h4>Multi-Store Support</h4>
+                        <p>Connect multiple Shopify stores to a single Odoo instance for centralized management.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Install App</h3>
+                    <p>Click the install button and authorize the app to access your Shopify store data.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Configure in Odoo</h3>
+                    <p>Add the generated credentials to your Odoo Connector module and select sync options.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Start Syncing</h3>
+                    <p>Your data begins syncing automatically. Monitor and manage everything from Odoo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="cta-section">
+        <div class="container">
+            <h2>Ready to Integrate?</h2>
+            <p>Start synchronizing your Shopify store with Odoo in minutes</p>
+            <a href="install.html" class="install-button">Get Started Free</a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>© 2025 Odoo Connector for Shopify. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="support.html">Support</a>
+            <a href="mailto:support@yourdomain.com">Contact Us</a>
+        </div>
+    </div>
+</body>
+</html>
